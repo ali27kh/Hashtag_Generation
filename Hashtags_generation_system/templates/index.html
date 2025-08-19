@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hashtag Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Hashtags from Text</h1>
+
+        <form action="/" method="POST" id="text-form">
+            <label for="description">Enter text to generate hashtags:</label><br />
+            <textarea
+                id="description"
+                name="description"
+                rows="6"
+                cols="60"
+                placeholder="Write your text here..."
+                required
+            ></textarea><br /><br />
+            <button type="submit" class="submit-btn">Generate</button>
+        </form>
+
+        {% if hashtags %}
+        <div id="hashtags-section">
+            <h2>Select Hashtags:</h2>
+            <div id="hashtag-container">
+                {% for hashtag in hashtags %}
+                <button
+                    class="hashtag-btn"
+                    id="hashtag-{{ loop.index }}"
+                    onclick="toggleHashtag('{{ hashtag.strip() }}', '{{ loop.index }}')"
+                >
+                    {{ hashtag.strip() }}
+                </button>
+                {% endfor %}
+            </div>
+
+            <h2>Selected Hashtags:</h2>
+            <textarea id="selected-hashtags" rows="4" cols="50" readonly></textarea><br>
+            <button onclick="copyHashtags()" class="submit-btn" style="margin-top:10px;">Copier les hashtags</button>
+            <button onclick="resetPage()" class="submit-btn" style="margin-top:10px; margin-left:10px;">Tester de nouveau</button>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function toggleHashtag(hashtag, index) {
+            const textarea = document.getElementById("selected-hashtags");
+            const button = document.getElementById(`hashtag-${index}`);
+            let selected = textarea.value.split(' ').map(h => h.trim()).filter(h => h);
+
+            if (selected.includes(hashtag)) {
+                selected = selected.filter(h => h !== hashtag);
+                button.classList.remove('selected');
+            } else {
+                selected.push(hashtag);
+                button.classList.add('selected');
+            }
+
+            textarea.value = selected.join(' ');
+        }
+
+        function copyHashtags() {
+            const textarea = document.getElementById("selected-hashtags");
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert("Hashtags copiés !");
+                } else {
+                    alert("Impossible de copier !");
+                }
+            } catch (err) {
+                alert("Erreur lors de la copie");
+            }
+        }
+
+        function resetPage() {
+            window.location.href = "/";
+        }
+    </script>
+</body>
+</html>
