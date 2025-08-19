@@ -1,4 +1,4 @@
-# 📌 Hashtag Generation
+# #️⃣ Hashtag Generation
 
 ## 📌 Project Overview
 This project generates **relevant hashtags** from input text using **NLP techniques** with **spaCy**, **NLTK**, and a **Flask interface** for real-time testing. It extracts key nouns and adjectives, filters them, and formats them into hashtags for social media use. The system dynamically adjusts the number of hashtags based on text length, ensuring concise and effective output.
@@ -90,7 +90,7 @@ if __name__ == '__main__':
   
 - **Test Video**:
 
-  https://github.com/user-attachments/assets/8a610e94-a726-476a-8dca-fc182cd267bc
+  https://github.com/user-attachments/assets/f2399c4f-204f-48c2-8c14-fa3ce66dfb27
 
 ---
 
